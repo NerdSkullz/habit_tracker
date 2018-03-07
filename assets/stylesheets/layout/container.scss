@@ -1,0 +1,9 @@
+/********************************************
+        CONTAINER
+********************************************/
+
+.container{}
+
+@include respond-to(tablet){}
+
+@include respond-to(netbook){}

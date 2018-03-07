@@ -1,0 +1,27 @@
+/********************************************
+        TYPOGRAPHY STYLES
+********************************************/
+
+body{font: 300 100%/1 $arial;}
+h1, h2, h3, h4, h5 {}
+h1{}
+h2{}
+h3{}
+h4{}
+h5{}
+p{}
+a{
+  &:hover{}
+}
+ul, ol{}
+dl{}
+dt{}
+dd{}
+strong{}
+blockquote{}
+cite{}
+hr{}
+
+@include respond-to(tablet){}
+
+@include respond-to(netbook){}

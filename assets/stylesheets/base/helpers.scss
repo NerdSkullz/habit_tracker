@@ -1,0 +1,168 @@
+/********************************************
+        MIXINS
+********************************************/
+
+
+/********************************************
+        BASE EM CALC
+********************************************/
+
+@function em($px, $base: 16) {
+  @return ($px / $base) * 1em;
+}
+
+@function Rem($size) {
+  $remSize: $size / 16px;
+  @return $remSize * 1rem;
+}
+
+/********************************************
+        MEDIA QUERIES
+********************************************/
+
+@mixin respond-to($media) {
+  @if $media == port-mob {
+    @media only screen and ( min-width: em( 320 ) ) { @content; }
+  }
+
+  @if $media == land-mob {
+    @media only screen and ( min-width: em( 480 ) ) { @content; }
+  }
+
+  @if $media == fablet {
+    @media only screen and ( min-width: em( 572 ) ) { @content; }
+  }
+
+  @if $media == tablet {
+    @media only screen and ( min-width: em( 768 ) ) { @content; }
+  }
+
+  @else if $media == netbook {
+    @media only screen and ( min-width: em( 1025 ) ) { @content; }
+  }
+
+  @else if $media == desktop {
+    @media only screen and ( min-width: em( 1200 ) ) { @content; }
+  }
+
+  //If a tablet or smaller
+  @if $media == tablet-or-smaller {
+    @media only screen and ( max-width: em( 1024 ) ) { @content; }
+  }
+
+  //If a mobile or smaller
+  @if $media == mobile-or-smaller {
+    @media only screen and ( max-width: em( 767 ) ) { @content; }
+  }
+
+}
+
+
+/********************************************
+        EXTENDER OBJECTS
+********************************************/
+
+%clearfix {
+  zoom:1;
+  &:before, &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// MIXINS DUPLICATED FROM EXTENDER OBJECTS TO WORK IN MEDIA-QUERIES.
+// Yes, this is a nasty hack but generally you won't need to use these.
+
+@mixin clearfix {
+  zoom:1;
+  &:before, &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// Helper mixin for offset positioning
+// About: http://hugogiraudel.com/2013/08/05/offsets-sass-mixin/
+
+@mixin position($position, $args: ()) {
+  $offsets: top right bottom left;
+  position: $position;                                               // 1
+
+  @each $offset in $offsets {                                        // 3
+    $index: index($args, $offset);                                   // 4
+
+    @if $index {                                                     // 5
+      @if $index == length($args) {                                  // 6
+        #{$offset}: 0;                                               // 7
+      }
+      @else {                                                        // 8
+        $next: nth($args, $index + 1);                               // 9
+        @if is-valid-length($next) {                                 // 10
+          #{$offset}: $next;                                         // 11
+        }
+        @else if index($offsets, $next) {                            // 12
+          #{$offset}: 0;                                             // 13
+        }
+        @else {                                                      // 14
+          @warn "Invalid value `#{$next}` for offset `#{$offset}`."; // 15
+        }
+      }
+    }
+  }
+}
+
+// Function checking if $value is a valid length
+// ---
+// @param [literal] $value: value to test
+// ---
+// @return [bool]
+
+@function is-valid-length($value) {
+  @return (type-of($value) == "number" and not unitless($value))
+       or (index(auto initial inherit 0, $value) != false);
+}
+
+// Shorthands
+// ---
+
+@mixin absolute($args: ()) {
+  @include position(absolute, $args);
+}
+
+@mixin fixed($args: ()) {
+  @include position(fixed, $args);
+}
+
+@mixin relative($args: ()) {
+  @include position(relative, $args);
+}
+
+// Responsive aspect ratio
+// @include aspect-ratio(x,y) - REMEMBER TO ASSIGN CLASS .inner TO YOUR INNER CONTAINER
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}

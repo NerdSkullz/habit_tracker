@@ -1,0 +1,25 @@
+// Requiring doesn't allow varibles and mixins to carry over files. So we @import.
+@import "base/helpers";
+@import "base/variables";
+
+// BASE
+// Things like reset, utilities, fonts, link styles, buttons etc.
+@import "normalize.css/normalize";
+@import "base/reset";
+@import "base/utilities";
+@import "base/typography";
+@import "base/buttons";
+
+// LAYOUT
+// Major components of a page - used on every page
+@import "layout/header";
+@import "layout/nav";
+@import "layout/footer";
+@import "layout/container";
+
+// MODULES
+// Minor components of a page - used on multiple pages. One stylesheet per module
+// @import "modules/banner";
+
+// IE specific fixes - Import last to override as necessary. Delete if not needed
+@import "base/ie";

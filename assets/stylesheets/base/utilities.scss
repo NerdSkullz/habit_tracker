@@ -1,0 +1,17 @@
+/********************************************
+        UTILITY CLASSES
+********************************************/
+
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+.text-center{
+  text-align: center;
+}
+
+@include respond-to(tablet){}
+
+@include respond-to(netbook){}

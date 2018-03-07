@@ -1,0 +1,16 @@
+ // Import stylesheet to be extracted
+import '../stylesheets/app.scss'
+
+// Import all images for use in HTML
+<% Dir['assets/images/*'].each do |image| %>
+  import '../../<%= image %>'
+<% end %>
+
+// Add Sentry exception tracking
+import './support/sentry.js.erb'
+
+// Import legacy scripts to global namespace
+import 'script-loader!uglify-loader!jquery'
+
+// Import custom code
+import './main.ts'

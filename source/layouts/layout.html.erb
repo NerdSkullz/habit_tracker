@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title><%= page_title %></title>
+
+    <%= stylesheet_link_tag webpack_asset_path('app.css') %>
+    <%= javascript_include_tag webpack_asset_path('app.js') %>
+    <%= partial 'partials/google_analytics' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
